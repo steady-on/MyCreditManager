@@ -7,6 +7,57 @@
 
 import Foundation
 
+enum Credit: Double {
+    case Ap = 4.5
+    case A  = 4.0
+    case Bp = 3.5
+    case B  = 3.0
+    case Cp = 2.5
+    case C  = 2.0
+    case Dp = 1.5
+    case D  = 1.0
+    case F  = 0
+    
+    var creditString: String {
+        switch self {
+        case .Ap: return "A+"
+        case .A : return "A"
+        case .Bp: return "B+"
+        case .B : return "B"
+        case .Cp: return "C+"
+        case .C : return "C"
+        case .Dp: return "D+"
+        case .D : return "D"
+        case .F : return "F"
+        }
+    }
+    
+    func changeStringToCredit(_ input: String) -> Credit {
+        switch input {
+        case "A+":
+            return Credit.Ap
+        case "A" :
+            return Credit.A
+        case "B+":
+            return Credit.Bp
+        case "B" :
+            return Credit.B
+        case "C+":
+            return Credit.Cp
+        case "C" :
+            return Credit.C
+        case "D+":
+            return Credit.Dp
+        case "D" :
+            return Credit.C
+        case "F" :
+            return Credit.F
+        default:
+            return Credit.F
+        }
+    }
+}
+
 struct Student {
     let name: String
     var credits: [String: String] = [:]
