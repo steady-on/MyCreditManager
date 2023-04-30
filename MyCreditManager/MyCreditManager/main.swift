@@ -90,9 +90,9 @@ menuLoop: while true {
         case "3":
             updateCredit()
             continue
-//        case "4":
-//            deleteCredit()
-//            continue
+        case "4":
+            deleteCredit()
+            continue
 //        case "5":
 //            checkScore()
 //            continue
@@ -181,34 +181,34 @@ func updateCredit() {
     }
 }
 
-//func deleteCredit() {
-//    guard !students.isEmpty else {
-//        print("성적을 추가할 학생이 없습니다. 먼저 학생을 추가해 주세요.")
-//        return
-//    }
-//
-//    print("성적을 삭제할 학생의 이름, 과목을 띄어쓰기로 구분하여 차례로 입력해주세요.")
-//    print("입력예) Haru Swift")
-//
-//    guard let input = readLine() else { return }
-//
-//    let inputValues = input.trimmingCharacters(in: .whitespaces).components(separatedBy: " ")
-//
-//    guard inputValues.count == 2 else {
-//        print("입력이 잘못되었습니다. 다시 확인해주세요.")
-//        return
-//    }
-//
-//    let (name, subject) = (inputValues[0], inputValues[1])
-//
-//    if var student = students[name] {
-//        student[subject] = nil
-//        print("\(name) 학생의 \(subject) 과목의 성적이 삭제 되었습니다.")
-//    } else {
-//        print("\(name) 학생을 찾을 수 없습니다.")
-//    }
-//}
-//
+func deleteCredit() {
+    guard !students.isEmpty else {
+        print("성적을 추가할 학생이 없습니다. 먼저 학생을 추가해 주세요.")
+        return
+    }
+
+    print("성적을 삭제할 학생의 이름, 과목을 띄어쓰기로 구분하여 차례로 입력해주세요.")
+    print("입력예) Haru Swift")
+
+    guard let input = readLine() else { return }
+
+    let inputValues = input.trimmingCharacters(in: .whitespaces).components(separatedBy: " ")
+
+    guard inputValues.count == 2 else {
+        print("입력이 잘못되었습니다. 다시 확인해주세요.")
+        return
+    }
+
+    let (name, subject) = (inputValues[0], inputValues[1])
+    
+    if let index = students.firstIndex(where: { $0.name == name }) {
+        students[index].credits[subject] = nil
+        print("\(name) 학생의 \(subject) 과목의 성적이 삭제 되었습니다.")
+    } else {
+        print("\(name) 학생을 찾을 수 없습니다.")
+    }
+}
+
 //func checkScore() {
 //    guard !students.isEmpty else {
 //        print("성적을 확인할 학생이 없습니다. 먼저 학생을 추가해 주세요.")
