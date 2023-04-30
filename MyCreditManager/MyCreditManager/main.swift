@@ -60,24 +60,9 @@ enum Credit: Double {
 
 struct Student {
     let name: String
-    var credits: [String: String] = [:]
+    var credits: [String: Credit] = [:]
     var score: Double {
-        var totalCredit: Double = 0
-        
-        for credit in credits.values {
-            switch credit {
-            case "A+": totalCredit += 4.5
-            case "A" : totalCredit += 4.0
-            case "B+": totalCredit += 3.5
-            case "B" : totalCredit += 3.0
-            case "C+": totalCredit += 2.5
-            case "C" : totalCredit += 2.0
-            case "D+": totalCredit += 1.5
-            case "D" : totalCredit += 1.0
-            default  : break
-            }
-        }
-        
+        let totalCredit: Double = credits.values.reduce(0) { $0 + $1.rawValue }
         return totalCredit / Double(credits.count)
     }
     
