@@ -10,4 +10,4 @@
 
 ### STEP 0. 순서도
 
-<img src="https://user-images.githubusercontent.com/73203944/235338920-c513ee2f-f7db-494f-944c-b8e93187227f.png">
+<img src="https://user-images.githubusercontent.com/73203944/235344646-a41110ff-4665-4acc-8c3a-677421e9b232.png">
