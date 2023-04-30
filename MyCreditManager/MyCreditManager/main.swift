@@ -7,53 +7,28 @@
 
 import Foundation
 
-enum Credit: Double {
-    case Ap = 4.5
-    case A  = 4.0
-    case Bp = 3.5
-    case B  = 3.0
-    case Cp = 2.5
-    case C  = 2.0
-    case Dp = 1.5
-    case D  = 1.0
-    case F  = 0
+enum Credit: String {
+    case Aplus = "A+"
+    case A  = "A"
+    case Bplus = "B+"
+    case B  = "B"
+    case Cplus = "C+"
+    case C  = "C"
+    case Dplus = "D+"
+    case D  = "D"
+    case F  = "F"
     
-    var creditString: String {
+    var point: Double {
         switch self {
-        case .Ap: return "A+"
-        case .A : return "A"
-        case .Bp: return "B+"
-        case .B : return "B"
-        case .Cp: return "C+"
-        case .C : return "C"
-        case .Dp: return "D+"
-        case .D : return "D"
-        case .F : return "F"
-        }
-    }
-    
-    static func changeStringToCredit(_ input: String) -> Credit {
-        switch input {
-        case "A+":
-            return Credit.Ap
-        case "A" :
-            return Credit.A
-        case "B+":
-            return Credit.Bp
-        case "B" :
-            return Credit.B
-        case "C+":
-            return Credit.Cp
-        case "C" :
-            return Credit.C
-        case "D+":
-            return Credit.Dp
-        case "D" :
-            return Credit.C
-        case "F" :
-            return Credit.F
-        default:
-            return Credit.F
+        case .Aplus: return 4.5
+        case .A    : return 4.0
+        case .Bplus: return 3.5
+        case .B    : return 3.0
+        case .Cplus: return 2.5
+        case .C    : return 2.0
+        case .Dplus: return 1.5
+        case .D    : return 1.0
+        case .F    : return 0
         }
     }
 }
@@ -62,8 +37,8 @@ struct Student {
     let name: String
     var credits: [String: Credit] = [:]
     var score: Double {
-        let totalCredit: Double = credits.values.reduce(0) { $0 + $1.rawValue }
-        return totalCredit / Double(credits.count)
+        let totalPoints: Double = credits.values.reduce(0) { $0 + $1.point }
+        return totalPoints / Double(credits.count)
     }
     
     init(name: String) {
@@ -171,11 +146,16 @@ func updateCredit() {
         return
     }
 
-    let (name, subject, credit) = (inputValues[0], inputValues[1], inputValues[2])
+    let (name, subject, inputCredit) = (inputValues[0], inputValues[1], inputValues[2])
+    
+    guard let credit = Credit(rawValue: inputCredit) else {
+        print("성적의 입력이 잘못되었습니다. 다시 확인해주세요.")
+        return
+    }
     
     if let index = students.firstIndex(where: { $0.name == name }) {
-        students[index].credits[subject] = Credit.changeStringToCredit(credit)
-        print("\(name) 학생의 \(subject) 과목이 \(credit)으로 추가(변경)되었습니다.")
+        students[index].credits[subject] = credit
+        print("\(name) 학생의 \(subject) 과목이 \(inputCredit)으로 추가(변경)되었습니다.")
     } else {
         print("\(name) 학생을 찾을 수 없습니다.")
     }
@@ -233,7 +213,7 @@ func checkScore() {
         }
         
         for (subject, credit) in student.credits {
-            print("\(subject): \(credit.creditString)")
+            print("\(subject): \(credit.rawValue)")
         }
         
         print("평점: \(student.score)")
