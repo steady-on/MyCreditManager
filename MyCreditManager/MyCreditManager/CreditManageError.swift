@@ -25,6 +25,7 @@ enum CreditManageError: Error {
     case existStudent
     case notFoundStudent
     case invalidGradeInput
+    case notFoundSubject(name: String, subject: String)
     case emptyCredits
     
     var localizedDescription: String {
@@ -47,6 +48,8 @@ enum CreditManageError: Error {
             return "학생을 찾을 수 없습니다."
         case .invalidGradeInput:
             return "올바르지 않은 성적이 입력되었습니다. 다시 확인해 주세요."
+        case .notFoundSubject(let name, let subject):
+            return "\(name) 학생의 \(subject)에 대한 성적을 찾을 수 없습니다. 다시 확인해 주세요."
         case .emptyCredits:
             return "학생은 아직 입력된 성적이 없습니다. 성적을 추가해 주세요."
         }

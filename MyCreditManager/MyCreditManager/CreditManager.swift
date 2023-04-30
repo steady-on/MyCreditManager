@@ -115,11 +115,16 @@ class CreditManager {
 
         let (name, subject) = (texts[0], texts[1])
         
-        if let index = students.firstIndex(where: { $0.name == name }) {
+        guard let index = students.firstIndex(where: { $0.name == name }) else {
+            print("\(name)", CreditManageError.notFoundStudent.localizedDescription)
+            return
+        }
+        
+        if students[index].credits[subject] != nil {
             students[index].credits[subject] = nil
             print("\(name) 학생의 \(subject) 과목의 성적이 삭제 되었습니다.")
         } else {
-            print("\(name)", CreditManageError.notFoundStudent.localizedDescription)
+            print(CreditManageError.notFoundSubject(name: name, subject: subject))
         }
     }
 
