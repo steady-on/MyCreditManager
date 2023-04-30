@@ -10,7 +10,7 @@ import Foundation
 var students: [String: [String: String]] = [:]
 
 func startProgram() {
-    while true {
+menuLoop: while true {
         print("원하는 기능의 숫자를 입력해주세요.")
         print("1: 학생추가, 2: 학생삭제, 3: 성적추가(수정), 4: 성적삭제, 5: 성적확인, X: 종료")
         
@@ -34,13 +34,11 @@ func startProgram() {
             continue
         case "X", "x":
             print("프로그램을 종료합니다...")
-            break
+            break menuLoop
         default:
             print("입력이 잘못되었습니다. 1~5 사이의 숫자 혹은 X를 입력해주세요.")
             continue
         }
-        
-        break
     }
 }
 
