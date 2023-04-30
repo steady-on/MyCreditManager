@@ -24,7 +24,7 @@ menuLoop: while true {
             deleteStudent()
             continue
         case "3":
-            print("성적추가(수정)")
+            updateCredit()
             continue
         case "4":
             print("성적삭제")
@@ -75,10 +75,39 @@ func deleteStudent() {
     }
     
     if students[name] == nil {
-        print("\(name) 학생을 찾지 못했습니다.")
+        print("\(name) 학생을 찾을 수 없습니다.")
     } else {
         students[name] = nil
         print("\(name) 학생을 삭제했습니다.")
+    }
+}
+
+func updateCredit() {
+    guard !students.isEmpty else {
+        print("성적을 추가할 학생이 없습니다. 먼저 학생을 추가해 주세요.")
+        return
+    }
+    
+    print("성적을 추가할 학생의 이름, 과목, 성적(A+, A, F 등)을 띄어쓰기로 구분하여 차례로 입력해주세요.")
+    print("입력예) Haru Swift A+")
+    print("만약에 학생의 성적 중 해당 과목이 존재하면 기존 점수가 갱신됩니다.")
+    
+    guard let input = readLine() else { return }
+    
+    let inputValues = input.trimmingCharacters(in: .whitespaces).components(separatedBy: " ")
+    
+    guard inputValues.count == 3 else {
+        print("입력이 잘못되었습니다. 다시 확인해주세요.")
+        return
+    }
+    
+    let (name, subject, credit) = (inputValues[0], inputValues[1], inputValues[2])
+    
+    if var student = students[name] {
+        student[subject] = credit
+        print("\(name) 학생의 \(subject) 과목이 \(credit)으로 추가(변경)되었습니다.")
+    } else {
+        print("\(name) 학생을 찾을 수 없습니다.")
     }
 }
 
