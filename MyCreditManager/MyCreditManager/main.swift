@@ -49,8 +49,13 @@ func addStudent() {
     
     let name = input.trimmingCharacters(in: .whitespaces)
     
-    if name.isEmpty {
+    guard !name.isEmpty else {
         print("입력이 잘못되었습니다. 다시 확인해주세요.")
+        return
+    }
+    
+    if students[name] != nil {
+        print("\(name) 학생은 이미 존재하는 학생입니다. 추가하지 않습니다.")
     } else {
         students[name] = [:]
         print("\(name) 학생을 추가했습니다.")
