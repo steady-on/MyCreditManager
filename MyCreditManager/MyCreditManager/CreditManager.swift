@@ -49,7 +49,7 @@ class CreditManager {
         guard let name: String = getText() else { return }
 
         if students.contains(where: { $0.name == name }) {
-            print("\(name)", CreditManageError.existStudent.localizedDescription)
+            print(CreditManageError.existStudent(name: name).localizedDescription)
         } else {
             let student = Student(name: name)
             students.append(student)
@@ -71,7 +71,7 @@ class CreditManager {
             students.remove(at: index)
             print("\(name) 학생을 삭제했습니다.")
         } else {
-            print("\(name)", CreditManageError.notFoundStudent.localizedDescription)
+            print(CreditManageError.notFoundStudent(name: name).localizedDescription)
         }
     }
 
@@ -98,7 +98,7 @@ class CreditManager {
             students[index].credits[subject] = credit
             print("\(name) 학생의 \(subject) 과목이 \(inputCredit)으로 추가(변경)되었습니다.")
         } else {
-            print("\(name)", CreditManageError.notFoundStudent.localizedDescription)
+            print(CreditManageError.notFoundStudent(name: name).localizedDescription)
         }
     }
 
@@ -116,7 +116,7 @@ class CreditManager {
         let (name, subject) = (texts[0], texts[1])
         
         guard let index = students.firstIndex(where: { $0.name == name }) else {
-            print("\(name)", CreditManageError.notFoundStudent.localizedDescription)
+            print(CreditManageError.notFoundStudent(name: name).localizedDescription)
             return
         }
         
@@ -140,7 +140,7 @@ class CreditManager {
         
         if let student = students.first(where: { $0.name == name}) {
             guard !student.credits.isEmpty else {
-                print("\(name)", CreditManageError.emptyCredits.localizedDescription)
+                print(CreditManageError.emptyCredits(name: name).localizedDescription)
                 return
             }
             
@@ -150,7 +150,7 @@ class CreditManager {
             
             print("평점: \(student.score)")
         } else {
-            print("\(name)", CreditManageError.notFoundStudent.localizedDescription)
+            print(CreditManageError.notFoundStudent(name: name).localizedDescription)
         }
     }
 }
