@@ -18,7 +18,7 @@ menuLoop: while true {
         
         switch menuChoice {
         case "1":
-            print("학생추가")
+            addStudent()
             continue
         case "2":
             print("학생삭제")
@@ -39,6 +39,21 @@ menuLoop: while true {
             print("입력이 잘못되었습니다. 1~5 사이의 숫자 혹은 X를 입력해주세요.")
             continue
         }
+    }
+}
+
+func addStudent() {
+    print("추가할 학생의 이름을 입력해주세요.")
+    
+    guard let input: String = readLine() else { return }
+    
+    let name = input.trimmingCharacters(in: .whitespaces)
+    
+    if name.isEmpty {
+        print("입력이 잘못되었습니다. 다시 확인해주세요.")
+    } else {
+        students[name] = [:]
+        print("\(name) 학생을 추가했습니다.")
     }
 }
 
