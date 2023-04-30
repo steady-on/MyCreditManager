@@ -61,3 +61,32 @@
 
 2. students가 비어있으면 메뉴 2~5는 동작하지 않도록 구현
    <img src="https://user-images.githubusercontent.com/73203944/235345672-5d1f19e1-89ef-4897-a7e1-726b04bd361f.png">
+
+## STEP 2. 객체를 통해 구현하기
+
+학생의 정보를 담을 Student struct와 성적에 대한 점수와 문자열값을 가지고 있는 Score enum, CreditManager class를 정의하여 구현
+
+### struct Student
+
+- name: String 타입으로 학생의 이름을 저장하는 프로퍼티
+- credits: [String: Credit] 타입으로 과목명을 key로 하고 성적을 value로 하는 프로퍼티
+- score: Double 타입의 연산 프로퍼티로, credits에 입력된 성적을 기반으로 평점을 계산하여 저장하는 프로퍼티
+
+- init(\_:) : 매개인자로 name을 받아 Student의 name에 할당하는 메서드, 다른 프로퍼티의 경우 초기화 과정에서 할당 받을 수 없으므로 매개변수를 두지 않음
+
+### enum Credit
+
+- 각각의 성적에 대한 문자열을 rawValue로 하는 객체
+- point : Double 타입 연산 프로퍼티로 각각의 성적에 대한 점수값을 return
+
+### class CreditManager
+
+- 구현된 메서드와 프로퍼티를 하나의 class에 담음
+- students와 startProgram 메서드를 제외한 모든 메서드는 private 처리하여 함부로 접근할 수 없도록 함
+- getText<T>(\_:) : 사용자에게 입력 받아 정의된 타입으로 적절히 처리하여 return 하는 메서드
+
+### 변경된 로직
+
+- updateCredit : inputCredit을 rawValue로 하는 Credit 객체를 credit에 담고 credit이 nil이면, 입력을 다시 하도록 메세지 출력
+
+- 그 외 students의 타입이 변경되면서 그에 따라 각 함수들의 로직 변경
