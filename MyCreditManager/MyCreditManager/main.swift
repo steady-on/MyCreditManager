@@ -84,9 +84,9 @@ menuLoop: while true {
         case "1":
             addStudent()
             continue
-//        case "2":
-//            deleteStudent()
-//            continue
+        case "2":
+            deleteStudent()
+            continue
 //        case "3":
 //            updateCredit()
 //            continue
@@ -127,31 +127,31 @@ func addStudent() {
     }
 }
 
-//func deleteStudent() {
-//    guard !students.isEmpty else {
-//        print("삭제할 학생이 없습니다. 먼저 학생을 추가해 주세요.")
-//        return
-//    }
-//
-//    print("삭제할 학생의 이름을 입력해주세요.")
-//
-//    guard let input = readLine() else { return }
-//
-//    let name = input.trimmingCharacters(in: .whitespaces)
-//
-//    guard !name.isEmpty else {
-//        print("입력이 잘못되었습니다. 다시 확인해주세요.")
-//        return
-//    }
-//
-//    if students[name] == nil {
-//        print("\(name) 학생을 찾을 수 없습니다.")
-//    } else {
-//        students[name] = nil
-//        print("\(name) 학생을 삭제했습니다.")
-//    }
-//}
-//
+func deleteStudent() {
+    guard !students.isEmpty else {
+        print("삭제할 학생이 없습니다. 먼저 학생을 추가해 주세요.")
+        return
+    }
+
+    print("삭제할 학생의 이름을 입력해주세요.")
+
+    guard let input = readLine() else { return }
+
+    let name = input.trimmingCharacters(in: .whitespaces)
+
+    guard !name.isEmpty else {
+        print("입력이 잘못되었습니다. 다시 확인해주세요.")
+        return
+    }
+
+    if let index = students.firstIndex(where: { $0.name == name }) {
+        students.remove(at: index)
+        print("\(name) 학생을 삭제했습니다.")        
+    } else {
+        print("\(name) 학생을 찾을 수 없습니다.")
+    }
+}
+
 //func updateCredit() {
 //    guard !students.isEmpty else {
 //        print("성적을 추가할 학생이 없습니다. 먼저 학생을 추가해 주세요.")
