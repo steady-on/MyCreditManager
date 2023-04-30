@@ -21,7 +21,7 @@ menuLoop: while true {
             addStudent()
             continue
         case "2":
-            print("학생삭제")
+            deleteStudent()
             continue
         case "3":
             print("성적추가(수정)")
@@ -54,6 +54,31 @@ func addStudent() {
     } else {
         students[name] = [:]
         print("\(name) 학생을 추가했습니다.")
+    }
+}
+
+func deleteStudent() {
+    guard !students.isEmpty else {
+        print("삭제할 학생이 없습니다. 먼저 학생을 추가해 주세요.")
+        return
+    }
+    
+    print("삭제할 학생의 이름을 입력해주세요.")
+    
+    guard let input = readLine() else { return }
+    
+    let name = input.trimmingCharacters(in: .whitespaces)
+    
+    guard !name.isEmpty else {
+        print("입력이 잘못되었습니다. 다시 확인해주세요.")
+        return
+    }
+    
+    if students[name] == nil {
+        print("\(name) 학생을 찾지 못했습니다.")
+    } else {
+        students[name] = nil
+        print("\(name) 학생을 삭제했습니다.")
     }
 }
 
