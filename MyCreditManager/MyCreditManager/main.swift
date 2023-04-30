@@ -7,6 +7,34 @@
 
 import Foundation
 
+struct Student {
+    let name: String
+    var credits: [String: String] = [:]
+    var score: Double {
+        var totalCredit: Double = 0
+        
+        for credit in credits.values {
+            switch credit {
+            case "A+": totalCredit += 4.5
+            case "A" : totalCredit += 4.0
+            case "B+": totalCredit += 3.5
+            case "B" : totalCredit += 3.0
+            case "C+": totalCredit += 2.5
+            case "C" : totalCredit += 2.0
+            case "D+": totalCredit += 1.5
+            case "D" : totalCredit += 1.0
+            default  : break
+            }
+        }
+        
+        return totalCredit / Double(credits.count)
+    }
+    
+    init(name: String) {
+        self.name = name
+    }
+}
+
 var students: [String: [String: String]] = [:]
 
 func startProgram() {
@@ -53,7 +81,7 @@ func addStudent() {
         print("입력이 잘못되었습니다. 다시 확인해주세요.")
         return
     }
-    
+
     if students[name] != nil {
         print("\(name) 학생은 이미 존재하는 학생입니다. 추가하지 않습니다.")
     } else {
