@@ -10,6 +10,7 @@
 		6379843729FCFC9700729212 /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6379843629FCFC9700729212 /* main.swift */; };
 		6379843E29FE957300729212 /* Credit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6379843D29FE957300729212 /* Credit.swift */; };
 		6379844029FE958600729212 /* Student.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6379843F29FE958600729212 /* Student.swift */; };
+		6379844229FE96C800729212 /* CreditManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6379844129FE96C800729212 /* CreditManager.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -29,6 +30,7 @@
 		6379843629FCFC9700729212 /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
 		6379843D29FE957300729212 /* Credit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Credit.swift; sourceTree = "<group>"; };
 		6379843F29FE958600729212 /* Student.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Student.swift; sourceTree = "<group>"; };
+		6379844129FE96C800729212 /* CreditManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreditManager.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -62,6 +64,7 @@
 			isa = PBXGroup;
 			children = (
 				6379843629FCFC9700729212 /* main.swift */,
+				6379844129FE96C800729212 /* CreditManager.swift */,
 				6379843D29FE957300729212 /* Credit.swift */,
 				6379843F29FE958600729212 /* Student.swift */,
 			);
@@ -126,6 +129,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				6379844229FE96C800729212 /* CreditManager.swift in Sources */,
 				6379843E29FE957300729212 /* Credit.swift in Sources */,
 				6379844029FE958600729212 /* Student.swift in Sources */,
 				6379843729FCFC9700729212 /* main.swift in Sources */,
