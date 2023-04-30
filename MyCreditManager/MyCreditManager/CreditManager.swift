@@ -37,7 +37,7 @@ class CreditManager {
                 print("프로그램을 종료합니다...")
                 break menuLoop
             default:
-                print("입력이 잘못되었습니다. 1~5 사이의 숫자 혹은 X를 입력해주세요.")
+                print("잘못된 입력입니다. 1~5 사이의 숫자 혹은 X를 입력해주세요.")
                 continue
             }
         }
@@ -90,7 +90,7 @@ class CreditManager {
         let (name, subject, inputCredit) = (texts[0], texts[1], texts[2])
         
         guard let credit = Credit(rawValue: inputCredit) else {
-            print("성적의 입력이 잘못되었습니다. 다시 확인해주세요.")
+            print("성적이 잘못 입력되었습니다. 다시 확인해주세요.")
             return
         }
         
@@ -145,7 +145,7 @@ class CreditManager {
             
             print("평점: \(student.score)")
         } else {
-            print("\(name) 학생을 찾지 못했습니다.")
+            print("\(name) 학생을 찾을 수 없습니다.")
         }
     }
 }
@@ -157,14 +157,14 @@ extension CreditManager {
         let word = input.trimmingCharacters(in: .whitespaces)
 
         guard !word.isEmpty else {
-            print("입력이 잘못되었습니다. 다시 확인해주세요.")
+            print("잘못된 입력입니다. 다시 확인해주세요.")
             return nil
         }
         
         let inputValues = word.components(separatedBy: " ")
         
         guard inputValues.count == count else {
-            print("입력이 잘못되었습니다. 다시 확인해주세요.")
+            print("잘못된 입력입니다. 다시 확인해주세요.")
             return nil
         }
         
