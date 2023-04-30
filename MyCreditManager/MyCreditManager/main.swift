@@ -71,7 +71,7 @@ struct Student {
     }
 }
 
-var students: [String: [String: String]] = [:]
+var students: [Student] = []
 
 func startProgram() {
 menuLoop: while true {
