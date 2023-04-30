@@ -45,15 +45,8 @@ class CreditManager {
 
     private func addStudent() {
         print("추가할 학생의 이름을 입력해주세요.")
-        
-        guard let input: String = readLine() else { return }
-        
-        let name = input.trimmingCharacters(in: .whitespaces)
-        
-        guard !name.isEmpty else {
-            print("입력이 잘못되었습니다. 다시 확인해주세요.")
-            return
-        }
+
+        guard let name: String = getText() else { return }
 
         if students.contains(where: { $0.name == name }) {
             print("\(name) 학생은 이미 존재하는 학생입니다. 추가하지 않습니다.")
@@ -72,14 +65,7 @@ class CreditManager {
 
         print("삭제할 학생의 이름을 입력해주세요.")
 
-        guard let input = readLine() else { return }
-
-        let name = input.trimmingCharacters(in: .whitespaces)
-
-        guard !name.isEmpty else {
-            print("입력이 잘못되었습니다. 다시 확인해주세요.")
-            return
-        }
+        guard let name: String = getText() else { return }
 
         if let index = students.firstIndex(where: { $0.name == name }) {
             students.remove(at: index)
@@ -99,16 +85,9 @@ class CreditManager {
         print("입력예) Haru Swift A+")
         print("만약에 학생의 성적 중 해당 과목이 존재하면 기존 점수가 갱신됩니다.")
 
-        guard let input = readLine() else { return }
+        guard let texts: [String] = getText(3) else { return }
 
-        let inputValues = input.trimmingCharacters(in: .whitespaces).components(separatedBy: " ")
-
-        guard inputValues.count == 3 else {
-            print("입력이 잘못되었습니다. 다시 확인해주세요.")
-            return
-        }
-
-        let (name, subject, inputCredit) = (inputValues[0], inputValues[1], inputValues[2])
+        let (name, subject, inputCredit) = (texts[0], texts[1], texts[2])
         
         guard let credit = Credit(rawValue: inputCredit) else {
             print("성적의 입력이 잘못되었습니다. 다시 확인해주세요.")
@@ -132,16 +111,9 @@ class CreditManager {
         print("성적을 삭제할 학생의 이름, 과목을 띄어쓰기로 구분하여 차례로 입력해주세요.")
         print("입력예) Haru Swift")
 
-        guard let input = readLine() else { return }
+        guard let texts: [String] = getText(2) else { return }
 
-        let inputValues = input.trimmingCharacters(in: .whitespaces).components(separatedBy: " ")
-
-        guard inputValues.count == 2 else {
-            print("입력이 잘못되었습니다. 다시 확인해주세요.")
-            return
-        }
-
-        let (name, subject) = (inputValues[0], inputValues[1])
+        let (name, subject) = (texts[0], texts[1])
         
         if let index = students.firstIndex(where: { $0.name == name }) {
             students[index].credits[subject] = nil
@@ -159,14 +131,7 @@ class CreditManager {
 
         print("성적을 확인할 학생의 이름을 입력해주세요.")
 
-        guard let input = readLine() else { return }
-
-        let name = input.trimmingCharacters(in: .whitespaces)
-
-        guard !name.isEmpty else {
-            print("입력이 잘못되었습니다. 다시 확인해주세요.")
-            return
-        }
+        guard let name: String = getText() else { return }
         
         if let student = students.first(where: { $0.name == name}) {
             guard !student.credits.isEmpty else {
@@ -185,3 +150,28 @@ class CreditManager {
     }
 }
 
+extension CreditManager {
+    private func getText<T>(_ count: Int = 1) -> T? {
+        guard let input = readLine() else { return nil }
+
+        let word = input.trimmingCharacters(in: .whitespaces)
+
+        guard !word.isEmpty else {
+            print("입력이 잘못되었습니다. 다시 확인해주세요.")
+            return nil
+        }
+        
+        let inputValues = word.components(separatedBy: " ")
+        
+        guard inputValues.count == count else {
+            print("입력이 잘못되었습니다. 다시 확인해주세요.")
+            return nil
+        }
+        
+        if inputValues.count == 1 {
+            return word as? T
+        } else {
+            return inputValues as? T
+        }
+    }
+}
