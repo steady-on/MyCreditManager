@@ -103,8 +103,8 @@ func updateCredit() {
     
     let (name, subject, credit) = (inputValues[0], inputValues[1], inputValues[2])
     
-    if var student = students[name] {
-        student[subject] = credit
+    if students[name] != nil {
+        students[name]![subject] = credit
         print("\(name) 학생의 \(subject) 과목이 \(credit)으로 추가(변경)되었습니다.")
     } else {
         print("\(name) 학생을 찾을 수 없습니다.")
