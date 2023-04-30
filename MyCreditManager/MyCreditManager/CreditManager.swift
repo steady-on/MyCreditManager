@@ -37,7 +37,7 @@ class CreditManager {
                 print("프로그램을 종료합니다...")
                 break menuLoop
             default:
-                print("입력이 잘못되었습니다. 1~5 사이의 숫자 혹은 X를 입력해주세요.")
+                print(CreditManageError.invalidInput(.menu).localizedDescription)
                 continue
             }
         }
@@ -49,7 +49,7 @@ class CreditManager {
         guard let name: String = getText() else { return }
 
         if students.contains(where: { $0.name == name }) {
-            print("\(name) 학생은 이미 존재하는 학생입니다. 추가하지 않습니다.")
+            print(CreditManageError.existStudent(name: name).localizedDescription)
         } else {
             let student = Student(name: name)
             students.append(student)
@@ -59,7 +59,7 @@ class CreditManager {
 
     private func deleteStudent() {
         guard !students.isEmpty else {
-            print("삭제할 학생이 없습니다. 먼저 학생을 추가해 주세요.")
+            print(CreditManageError.emptyStudents(.deleteStudent).localizedDescription)
             return
         }
 
@@ -71,13 +71,13 @@ class CreditManager {
             students.remove(at: index)
             print("\(name) 학생을 삭제했습니다.")
         } else {
-            print("\(name) 학생을 찾을 수 없습니다.")
+            print(CreditManageError.notFoundStudent(name: name).localizedDescription)
         }
     }
 
     private func updateCredit() {
         guard !students.isEmpty else {
-            print("성적을 추가할 학생이 없습니다. 먼저 학생을 추가해 주세요.")
+            print(CreditManageError.emptyStudents(.update).localizedDescription)
             return
         }
 
@@ -90,7 +90,7 @@ class CreditManager {
         let (name, subject, inputCredit) = (texts[0], texts[1], texts[2])
         
         guard let credit = Credit(rawValue: inputCredit) else {
-            print("성적의 입력이 잘못되었습니다. 다시 확인해주세요.")
+            print(CreditManageError.invalidGradeInput.localizedDescription)
             return
         }
         
@@ -98,13 +98,13 @@ class CreditManager {
             students[index].credits[subject] = credit
             print("\(name) 학생의 \(subject) 과목이 \(inputCredit)으로 추가(변경)되었습니다.")
         } else {
-            print("\(name) 학생을 찾을 수 없습니다.")
+            print(CreditManageError.notFoundStudent(name: name).localizedDescription)
         }
     }
 
     private func deleteCredit() {
         guard !students.isEmpty else {
-            print("성적을 추가할 학생이 없습니다. 먼저 학생을 추가해 주세요.")
+            print(CreditManageError.emptyStudents(.deleteCredit))
             return
         }
 
@@ -115,17 +115,22 @@ class CreditManager {
 
         let (name, subject) = (texts[0], texts[1])
         
-        if let index = students.firstIndex(where: { $0.name == name }) {
+        guard let index = students.firstIndex(where: { $0.name == name }) else {
+            print(CreditManageError.notFoundStudent(name: name).localizedDescription)
+            return
+        }
+        
+        if students[index].credits[subject] != nil {
             students[index].credits[subject] = nil
             print("\(name) 학생의 \(subject) 과목의 성적이 삭제 되었습니다.")
         } else {
-            print("\(name) 학생을 찾을 수 없습니다.")
+            print(CreditManageError.notFoundSubject(name: name, subject: subject))
         }
     }
 
     private func checkScore() {
         guard !students.isEmpty else {
-            print("성적을 확인할 학생이 없습니다. 먼저 학생을 추가해 주세요.")
+            print(CreditManageError.emptyStudents(.deleteCredit))
             return
         }
 
@@ -135,7 +140,7 @@ class CreditManager {
         
         if let student = students.first(where: { $0.name == name}) {
             guard !student.credits.isEmpty else {
-                print("\(name) 학생은 아직 성적이 입력된 과목이 없습니다. 성적을 추가해 주세요.")
+                print(CreditManageError.emptyCredits(name: name).localizedDescription)
                 return
             }
             
@@ -145,7 +150,7 @@ class CreditManager {
             
             print("평점: \(student.score)")
         } else {
-            print("\(name) 학생을 찾지 못했습니다.")
+            print(CreditManageError.notFoundStudent(name: name).localizedDescription)
         }
     }
 }
@@ -157,14 +162,14 @@ extension CreditManager {
         let word = input.trimmingCharacters(in: .whitespaces)
 
         guard !word.isEmpty else {
-            print("입력이 잘못되었습니다. 다시 확인해주세요.")
+            print(CreditManageError.invalidInput(.text).localizedDescription)
             return nil
         }
         
         let inputValues = word.components(separatedBy: " ")
         
         guard inputValues.count == count else {
-            print("입력이 잘못되었습니다. 다시 확인해주세요.")
+            print(CreditManageError.invalidInput(.text).localizedDescription)
             return nil
         }
         
