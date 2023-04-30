@@ -93,9 +93,9 @@ menuLoop: while true {
         case "4":
             deleteCredit()
             continue
-//        case "5":
-//            checkScore()
-//            continue
+        case "5":
+            checkScore()
+            continue
         case "X", "x":
             print("프로그램을 종료합니다...")
             break menuLoop
@@ -209,51 +209,37 @@ func deleteCredit() {
     }
 }
 
-//func checkScore() {
-//    guard !students.isEmpty else {
-//        print("성적을 확인할 학생이 없습니다. 먼저 학생을 추가해 주세요.")
-//        return
-//    }
-//
-//    print("성적을 확인할 학생의 이름을 입력해주세요.")
-//
-//    guard let input = readLine() else { return }
-//
-//    let name = input.trimmingCharacters(in: .whitespaces)
-//
-//    guard !name.isEmpty else {
-//        print("입력이 잘못되었습니다. 다시 확인해주세요.")
-//        return
-//    }
-//
-//    if let reportCard = students[name] {
-//        guard !reportCard.isEmpty else {
-//            print("\(name) 학생은 아직 성적이 입력된 과목이 없습니다. 성적을 추가해 주세요.")
-//            return
-//        }
-//
-//        var totalScore: Double = 0
-//
-//        for (subject, credit) in reportCard {
-//            print("\(subject): \(credit)")
-//
-//            switch credit {
-//            case "A+": totalScore += 4.5
-//            case "A" : totalScore += 4.0
-//            case "B+": totalScore += 3.5
-//            case "B" : totalScore += 3.0
-//            case "C+": totalScore += 2.5
-//            case "C" : totalScore += 2.0
-//            case "D+": totalScore += 1.5
-//            case "D" : totalScore += 1.0
-//            default  : break
-//            }
-//        }
-//
-//        print("평점: \(totalScore / Double(reportCard.count))")
-//    } else {
-//        print("\(name) 학생을 찾지 못했습니다.")
-//    }
-//}
+func checkScore() {
+    guard !students.isEmpty else {
+        print("성적을 확인할 학생이 없습니다. 먼저 학생을 추가해 주세요.")
+        return
+    }
+
+    print("성적을 확인할 학생의 이름을 입력해주세요.")
+
+    guard let input = readLine() else { return }
+
+    let name = input.trimmingCharacters(in: .whitespaces)
+
+    guard !name.isEmpty else {
+        print("입력이 잘못되었습니다. 다시 확인해주세요.")
+        return
+    }
+    
+    if let student = students.first(where: { $0.name == name}) {
+        guard !student.credits.isEmpty else {
+            print("\(name) 학생은 아직 성적이 입력된 과목이 없습니다. 성적을 추가해 주세요.")
+            return
+        }
+        
+        for (subject, credit) in student.credits {
+            print("\(subject): \(credit.creditString)")
+        }
+        
+        print("평점: \(student.score)")
+    } else {
+        print("\(name) 학생을 찾지 못했습니다.")
+    }
+}
 
 startProgram()
