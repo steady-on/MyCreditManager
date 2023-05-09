@@ -25,13 +25,17 @@ class CreditManager {
             case "1":
                 try addStudent()
                 return false
-            case "2": try deleteStudent()
+            case "2":
+                try deleteStudent()
                 return false
-            case "3": try updateCredit()
+            case "3":
+                try updateCredit()
                 return false
-            case "4": try deleteCredit()
+            case "4":
+                try deleteCredit()
                 return false
-            case "5": try checkScore()
+            case "5":
+                try checkScore()
                 return false
             default:
                 return true
