@@ -10,28 +10,42 @@ import Foundation
 class CreditManager {
     private var students: [Student] = []
     
-    func startProgram() throws {
+    func startProgram() {
+    menuLoop: while true {
         print("원하는 기능의 숫자를 입력해주세요.")
         print("1: 학생추가, 2: 학생삭제, 3: 성적추가(수정), 4: 성적삭제, 5: 성적확인, X: 종료")
         
-        guard let menuChoice = verifyMenuChoice() else { throw InputValueError.menu }
-        
-        switch menuChoice {
-        case "1":
-            do { try addStudent() } catch { print(error) }
-        case "2":
-            do { try deleteStudent() } catch { print(error) }
-        case "3":
-            do { try updateCredit() } catch { print(error) }
-        case "4":
-            do { try deleteCredit() } catch { print(error) }
-        case "5":
-            do { try checkScore() } catch { print(error) }
-        case "X", "x":
-            print("프로그램을 종료합니다...")
-        default:
-            break
+        guard let menuChoice = verifyMenuChoice() else {
+            print(InputValueError.menu)
+            continue
         }
+        
+        let result = Result {
+            switch menuChoice {
+            case "1":
+                try addStudent()
+                return false
+            case "2": try deleteStudent()
+                return false
+            case "3": try updateCredit()
+                return false
+            case "4": try deleteCredit()
+                return false
+            case "5": try checkScore()
+                return false
+            default:
+                return true
+            }
+        }
+        
+        switch result {
+        case .failure(let error): print(error)
+        case .success(let isExit) where isExit == true:
+            print("프로그램을 종료합니다...")
+            break menuLoop
+        default: continue
+        }
+    }
     }
     
     private func addStudent() throws {
@@ -112,7 +126,7 @@ class CreditManager {
         guard let name = verifyInputValue() else { throw InputValueError.text }
         
         guard let student = students.first(where: { $0.name == name}) else { throw InvalidDataError.notFoundStudent(name: name) }
-                
+        
         guard student.credits.isEmpty == false else { throw EmptyDataError.emptyCredits(name: name) }
         
         for (subject, credit) in student.credits {
