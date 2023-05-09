@@ -28,7 +28,7 @@ class CreditManager {
             do { try updateCredit() } catch { print(error) }
             continue
         case "4":
-            deleteCredit()
+            do { try deleteCredit() } catch { print(error) }
             continue
         case "5":
             checkScore()
@@ -92,30 +92,24 @@ class CreditManager {
         print("\(name) 학생의 \(subject) 과목이 \(inputCredit)으로 추가(변경)되었습니다.")
     }
     
-    private func deleteCredit() {
-        guard !students.isEmpty else {
-            print(CreditManageError.emptyStudents(.deleteCredit))
-            return
-        }
+    private func deleteCredit() throws {
+        guard students.isEmpty == false else { throw EmptyDataError.deleteCredit }
         
         print("성적을 삭제할 학생의 이름, 과목을 띄어쓰기로 구분하여 차례로 입력해주세요.")
         print("입력예) Haru Swift")
         
-        guard let texts: [String] = getText(2) else { return }
+        guard let inputValues = verifyInputValues(count: 2) else { throw InputValueError.text }
         
-        let (name, subject) = (texts[0], texts[1])
+        let (name, subject) = (inputValues[0], inputValues[1])
         
         guard let index = students.firstIndex(where: { $0.name == name }) else {
-            print(CreditManageError.notFoundStudent(name: name).localizedDescription)
-            return
+            throw InvalidDataError.notFoundStudent(name: name)
         }
         
-        if students[index].credits[subject] != nil {
-            students[index].credits[subject] = nil
-            print("\(name) 학생의 \(subject) 과목의 성적이 삭제 되었습니다.")
-        } else {
-            print(CreditManageError.notFoundSubject(name: name, subject: subject))
-        }
+        guard students[index].credits[subject] != nil else { throw InvalidDataError.notFoundSubject(name: name, subject: subject) }
+        
+        students[index].credits[subject] = nil
+        print("\(name) 학생의 \(subject) 과목의 성적이 삭제 되었습니다.")
     }
     
     private func checkScore() {
