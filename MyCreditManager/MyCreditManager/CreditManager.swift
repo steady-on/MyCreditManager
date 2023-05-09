@@ -112,30 +112,22 @@ class CreditManager {
         print("\(name) 학생의 \(subject) 과목의 성적이 삭제 되었습니다.")
     }
     
-    private func checkScore() {
-        guard !students.isEmpty else {
-            print(CreditManageError.emptyStudents(.deleteCredit))
-            return
-        }
+    private func checkScore() throws {
+        guard students.isEmpty == false else { throw EmptyDataError.deleteCredit }
         
         print("성적을 확인할 학생의 이름을 입력해주세요.")
         
-        guard let name: String = getText() else { return }
+        guard let name = verifyInputValue() else { throw InputValueError.text }
         
-        if let student = students.first(where: { $0.name == name}) {
-            guard !student.credits.isEmpty else {
-                print(CreditManageError.emptyCredits(name: name).localizedDescription)
-                return
-            }
-            
-            for (subject, credit) in student.credits {
-                print("\(subject): \(credit.rawValue)")
-            }
-            
-            print("평점: \(student.score)")
-        } else {
-            print(CreditManageError.notFoundStudent(name: name).localizedDescription)
+        guard let student = students.first(where: { $0.name == name}) else { throw InvalidDataError.notFoundStudent(name: name) }
+                
+        guard student.credits.isEmpty == false else { throw EmptyDataError.emptyCredits(name: name) }
+        
+        for (subject, credit) in student.credits {
+            print("\(subject): \(credit.rawValue)")
         }
+        
+        print("평점: \(student.score)")
     }
 }
 
