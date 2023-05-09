@@ -37,7 +37,6 @@ class CreditManager {
                 print("프로그램을 종료합니다...")
                 break menuLoop
             default:
-                print(CreditManageError.invalidInput(.menu).localizedDescription)
                 continue
             }
         }
@@ -156,27 +155,21 @@ class CreditManager {
 }
 
 extension CreditManager {
-    private func getText<T>(_ count: Int = 1) -> T? {
-        guard let input = readLine() else { return nil }
-
-        let word = input.trimmingCharacters(in: .whitespaces)
-
-        guard !word.isEmpty else {
-            print(CreditManageError.invalidInput(.text).localizedDescription)
-            return nil
-        }
+    private func verifyInputValue() -> String? {
+        guard let inputValue = readLine()?.trimmingCharacters(in: .whitespaces),
+                inputValue.isEmpty == false else { return nil }
         
-        let inputValues = word.components(separatedBy: " ")
+        return inputValue
+    }
+    
+    private func verifyInputValues(count: Int) -> [String]? {
+        guard let inputString = readLine()?.trimmingCharacters(in: .whitespaces),
+              inputString.isEmpty == false else { return nil }
         
-        guard inputValues.count == count else {
-            print(CreditManageError.invalidInput(.text).localizedDescription)
-            return nil
-        }
+        let inputValues = inputString.components(separatedBy: " ")
         
-        if inputValues.count == 1 {
-            return word as? T
-        } else {
-            return inputValues as? T
-        }
+        guard inputValues.count == count else { return nil }
+        
+        return inputValues
     }
 }
