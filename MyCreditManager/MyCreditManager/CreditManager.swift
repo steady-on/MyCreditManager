@@ -9,44 +9,44 @@ import Foundation
 
 class CreditManager {
     private var students: [Student] = []
-
+    
     func startProgram() {
     menuLoop: while true {
-            print("원하는 기능의 숫자를 입력해주세요.")
-            print("1: 학생추가, 2: 학생삭제, 3: 성적추가(수정), 4: 성적삭제, 5: 성적확인, X: 종료")
-            
-            let menuChoice = readLine()
-            
-            switch menuChoice {
-            case "1":
-                do { try addStudent() } catch { print(error) }
-                continue
-            case "2":
-                deleteStudent()
-                continue
             case "3":
                 updateCredit()
                 continue
-            case "4":
-                deleteCredit()
-                continue
-            case "5":
-                checkScore()
-                continue
-            case "X", "x":
-                print("프로그램을 종료합니다...")
-                break menuLoop
-            default:
-                continue
-            }
+        print("원하는 기능의 숫자를 입력해주세요.")
+        print("1: 학생추가, 2: 학생삭제, 3: 성적추가(수정), 4: 성적삭제, 5: 성적확인, X: 종료")
+        
+        let menuChoice = readLine()
+        
+        switch menuChoice {
+        case "1":
+            do { try addStudent() } catch { print(error) }
+            continue
+        case "2":
+            do { try deleteStudent() } catch { print(error) }
+            continue
+        case "4":
+            deleteCredit()
+            continue
+        case "5":
+            checkScore()
+            continue
+        case "X", "x":
+            print("프로그램을 종료합니다...")
+            break menuLoop
+        default:
+            continue
         }
     }
-
+    }
+    
     private func addStudent() throws {
         print("추가할 학생의 이름을 입력해주세요.")
-
+        
         guard let name = verifyInputValue() else { throw InputValueError.text }
-
+        
         guard students.contains(where: { $0.name == name }) else { throw InvalidDataError.duplicatedStudent(name: name) }
         
         let student = Student(name: name)
@@ -55,23 +55,20 @@ class CreditManager {
         
         print("\(name) 학생을 추가했습니다.")
     }
-
-    private func deleteStudent() {
-        guard !students.isEmpty else {
-            print(CreditManageError.emptyStudents(.deleteStudent).localizedDescription)
-            return
-        }
-
+    
+    private func deleteStudent() throws {
+        guard students.isEmpty == false else { throw EmptyDataError.deleteStudent }
+        
         print("삭제할 학생의 이름을 입력해주세요.")
-
-        guard let name: String = getText() else { return }
-
-        if let index = students.firstIndex(where: { $0.name == name }) {
-            students.remove(at: index)
-            print("\(name) 학생을 삭제했습니다.")
-        } else {
-            print(CreditManageError.notFoundStudent(name: name).localizedDescription)
+        
+        guard let name = verifyInputValue() else { throw InputValueError.text }
+        
+        guard let index = students.firstIndex(where: { $0.name == name }) else {
+            throw InvalidDataError.notFoundStudent(name: name)
         }
+        
+        students.remove(at: index)
+        print("\(name) 학생을 삭제했습니다.")
     }
 
     private func updateCredit() {
@@ -100,18 +97,18 @@ class CreditManager {
             print(CreditManageError.notFoundStudent(name: name).localizedDescription)
         }
     }
-
+    
     private func deleteCredit() {
         guard !students.isEmpty else {
             print(CreditManageError.emptyStudents(.deleteCredit))
             return
         }
-
+        
         print("성적을 삭제할 학생의 이름, 과목을 띄어쓰기로 구분하여 차례로 입력해주세요.")
         print("입력예) Haru Swift")
-
+        
         guard let texts: [String] = getText(2) else { return }
-
+        
         let (name, subject) = (texts[0], texts[1])
         
         guard let index = students.firstIndex(where: { $0.name == name }) else {
@@ -126,15 +123,15 @@ class CreditManager {
             print(CreditManageError.notFoundSubject(name: name, subject: subject))
         }
     }
-
+    
     private func checkScore() {
         guard !students.isEmpty else {
             print(CreditManageError.emptyStudents(.deleteCredit))
             return
         }
-
+        
         print("성적을 확인할 학생의 이름을 입력해주세요.")
-
+        
         guard let name: String = getText() else { return }
         
         if let student = students.first(where: { $0.name == name}) {
@@ -157,7 +154,7 @@ class CreditManager {
 extension CreditManager {
     private func verifyInputValue() -> String? {
         guard let inputValue = readLine()?.trimmingCharacters(in: .whitespaces),
-                inputValue.isEmpty == false else { return nil }
+              inputValue.isEmpty == false else { return nil }
         
         return inputValue
     }
