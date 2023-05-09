@@ -19,7 +19,7 @@ class CreditManager {
             
             switch menuChoice {
             case "1":
-                addStudent()
+                do { try addStudent() } catch { print(error) }
                 continue
             case "2":
                 deleteStudent()
@@ -42,18 +42,18 @@ class CreditManager {
         }
     }
 
-    private func addStudent() {
+    private func addStudent() throws {
         print("추가할 학생의 이름을 입력해주세요.")
 
-        guard let name: String = getText() else { return }
+        guard let name = verifyInputValue() else { throw InputValueError.text }
 
-        if students.contains(where: { $0.name == name }) {
-            print(CreditManageError.existStudent(name: name).localizedDescription)
-        } else {
-            let student = Student(name: name)
-            students.append(student)
-            print("\(name) 학생을 추가했습니다.")
-        }
+        guard students.contains(where: { $0.name == name }) else { throw InvalidDataError.duplicatedStudent(name: name) }
+        
+        let student = Student(name: name)
+        
+        students.append(student)
+        
+        print("\(name) 학생을 추가했습니다.")
     }
 
     private func deleteStudent() {
