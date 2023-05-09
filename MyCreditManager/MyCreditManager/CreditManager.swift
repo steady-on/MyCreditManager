@@ -39,7 +39,7 @@ class CreditManager {
         
         guard let name = verifyInputValue() else { throw InputValueError.text }
         
-        guard students.contains(where: { $0.name == name }) else { throw InvalidDataError.duplicatedStudent(name: name) }
+        guard students.contains(where: { $0.name == name }) == false else { throw InvalidDataError.duplicatedStudent(name: name) }
         
         let student = Student(name: name)
         
