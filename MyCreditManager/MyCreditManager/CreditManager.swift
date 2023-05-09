@@ -10,36 +10,28 @@ import Foundation
 class CreditManager {
     private var students: [Student] = []
     
-    func startProgram() {
-    menuLoop: while true {
+    func startProgram() throws {
         print("원하는 기능의 숫자를 입력해주세요.")
         print("1: 학생추가, 2: 학생삭제, 3: 성적추가(수정), 4: 성적삭제, 5: 성적확인, X: 종료")
         
-        let menuChoice = readLine()
+        guard let menuChoice = verifyMenuChoice() else { throw InputValueError.menu }
         
         switch menuChoice {
         case "1":
             do { try addStudent() } catch { print(error) }
-            continue
         case "2":
             do { try deleteStudent() } catch { print(error) }
-            continue
         case "3":
             do { try updateCredit() } catch { print(error) }
-            continue
         case "4":
             do { try deleteCredit() } catch { print(error) }
-            continue
         case "5":
-            checkScore()
-            continue
+            do { try checkScore() } catch { print(error) }
         case "X", "x":
             print("프로그램을 종료합니다...")
-            break menuLoop
         default:
-            continue
+            break
         }
-    }
     }
     
     private func addStudent() throws {
@@ -132,6 +124,14 @@ class CreditManager {
 }
 
 extension CreditManager {
+    private func verifyMenuChoice() -> String? {
+        let menu = ["1", "2", "3", "4", "5", "X", "x"]
+        
+        guard let inputValue = readLine(), menu.contains(inputValue) else { return nil }
+        
+        return inputValue
+    }
+    
     private func verifyInputValue() -> String? {
         guard let inputValue = readLine()?.trimmingCharacters(in: .whitespaces),
               inputValue.isEmpty == false else { return nil }
