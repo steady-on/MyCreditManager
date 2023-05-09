@@ -20,24 +20,24 @@ class CreditManager {
             continue
         }
         
-        let result = Result {
+        let result = Result<Bool, Error> {
             switch menuChoice {
-            case "1":
+            case .addStudent:
                 try addStudent()
                 return false
-            case "2":
+            case .deleteStudent:
                 try deleteStudent()
                 return false
-            case "3":
+            case .updateCredit:
                 try updateCredit()
                 return false
-            case "4":
+            case .deleteCredit:
                 try deleteCredit()
                 return false
-            case "5":
+            case .checkScore:
                 try checkScore()
                 return false
-            default:
+            case .exitProgram:
                 return true
             }
         }
