@@ -142,12 +142,10 @@ class CreditManager {
 }
 
 extension CreditManager {
-    private func verifyMenuChoice() -> String? {
-        let menu = ["1", "2", "3", "4", "5", "X", "x"]
+    private func verifyMenuChoice() -> Menu? {
+        guard let inputValue = readLine(), let menuChoice = Menu(rawValue: inputValue.uppercased()) else { return nil }
         
-        guard let inputValue = readLine(), menu.contains(inputValue) else { return nil }
-        
-        return inputValue
+        return menuChoice
     }
     
     private func verifyInputValue() -> String? {
